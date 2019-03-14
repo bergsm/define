@@ -1,0 +1,41 @@
+#!/usr/bin/python
+
+import requests
+import json
+import sys
+
+#API info
+APIid='5d6b5499'
+APIkey='93c96e79945340ed70893f19b405b779'
+APIurl='https://od-api.oxforddictionaries.com/api/v1'
+
+#check args
+if len(sys.argv) < 2:
+    print("Usage: define word")
+    exit(1)
+
+# get base word e.g. swim for swimming
+req_url = APIurl + "/inflections/en/" + sys.argv[1]
+r = requests.get(req_url, headers={'Accept':'application/json', 'app_id':APIid, 'app_key':APIkey})
+Lemma = json.loads(r.text)
+#for each in Lemma['results'][0]['lexicalEntries'][0]['inflectionOf'][0]:
+#    print(each)
+base = Lemma['results'][0]['lexicalEntries'][0]['inflectionOf'][0]['text']
+
+# get definition
+req_url = APIurl + "/entries/en/" + base
+r = requests.get(req_url, headers={'Accept':'application/json', 'app_id':APIid, 'app_key':APIkey})
+definition = json.loads(r.text)
+
+#for each in definition['results'][0]['lexicalEntries'][0]['entries'][0]['senses'][0]['definitions']:
+#    print(each)
+
+print(base)
+print(definition['results'][0]['lexicalEntries'][0]['entries'][0]['senses'][0]['definitions'][0])
+
+
+
+
+
+
+
