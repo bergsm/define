@@ -10,7 +10,7 @@ APIkey='93c96e79945340ed70893f19b405b779'
 APIurl='https://od-api.oxforddictionaries.com/api/v1'
 
 #check args
-if len(sys.argv) < 2:
+if len(sys.argv) != 2:
     print("Usage: define word")
     exit(1)
 
